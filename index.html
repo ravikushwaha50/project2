@@ -1,0 +1,282 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Ocean | Explore Nature</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            overflow: hidden;
+        }
+
+        /* Hero Section */
+        .hero {
+            width: 100%;
+            height: 100vh;
+            min-height: 400px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            background-image:
+                linear-gradient(
+                    rgba(15, 20, 35, 0.58),
+                    rgba(15, 20, 35, 0.58)
+                ),
+                url("https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1920&q=85");
+            background-position: center;
+            background-size: cover;
+            transition: background-image 0.4s ease;
+        }
+
+        /* Main Content */
+        .content {
+            width: 90%;
+            max-width: 550px;
+            padding: 20px;
+            animation: fadeIn 0.8s ease;
+        }
+
+        .content h1 {
+            font-size: clamp(36px, 6.5vw, 54px);
+            font-weight: 300;
+            letter-spacing: 8px;
+            line-height: 1.2;
+            margin-bottom: 5px;
+        }
+
+        .content p {
+            max-width: 450px;
+            margin: 0 auto 18px;
+            font-size: 9px;
+            line-height: 1.5;
+            font-weight: 400;
+            letter-spacing: 0.1px;
+        }
+
+        /* Explore Button */
+        .explore-btn {
+            display: inline-block;
+            padding: 8px 19px;
+            border: none;
+            border-radius: 6px;
+            background-color: #78c5e5;
+            color: #102330;
+            text-decoration: none;
+            font-size: 10px;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        .explore-btn:hover {
+            background-color: #ffffff;
+            transform: translateY(-2px);
+        }
+
+        /* Slider Arrows */
+        .arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 33px;
+            height: 33px;
+            border: none;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.75);
+            color: white;
+            font-size: 25px;
+            font-weight: 300;
+            line-height: 30px;
+            cursor: pointer;
+            transition: 0.3s;
+            z-index: 2;
+        }
+
+        .arrow:hover {
+            background: #78c5e5;
+            color: #111;
+        }
+
+        .prev {
+            left: 14px;
+        }
+
+        .next {
+            right: 14px;
+        }
+
+        /* Fade Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 600px) {
+            .hero {
+                min-height: 350px;
+            }
+
+            .content {
+                width: 88%;
+                padding: 10px;
+            }
+
+            .content h1 {
+                font-size: 35px;
+                letter-spacing: 5px;
+            }
+
+            .content p {
+                font-size: 10px;
+                line-height: 1.6;
+            }
+
+            .arrow {
+                width: 30px;
+                height: 30px;
+                font-size: 22px;
+            }
+
+            .prev {
+                left: 8px;
+            }
+
+            .next {
+                right: 8px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <section class="hero" id="hero">
+
+        <button class="arrow prev"
+                id="prev"
+                aria-label="Previous slide">
+            &#8249;
+        </button>
+
+        <div class="content" id="content">
+            <h1 id="heading">THE OCEAN</h1>
+
+            <p id="description">
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                Praesentium repellat debitis enim quaerat aliquam ea
+                reiciendis hic adipisci perspiciatis! Quod libero ducimus
+                error dolor dolorum repellendus asperiores aliquid non,
+                sit qui ex nobis quae corrupti.
+            </p>
+
+            <a href="#explore" class="explore-btn" id="exploreBtn">
+                EXPLORE MORE
+            </a>
+        </div>
+
+        <button class="arrow next"
+                id="next"
+                aria-label="Next slide">
+            &#8250;
+        </button>
+
+    </section>
+
+    <script>
+        const slides = [
+            {
+                title: "THE OCEAN",
+                image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1920&q=85",
+                description: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Praesentium repellat debitis enim quaerat aliquam ea reiciendis hic adipisci perspiciatis! Quod libero ducimus error dolor dolorum repellendus asperiores aliquid non, sit qui ex nobis quae corrupti."
+            },
+            {
+                title: "THE BEACH",
+                image: "https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=1920&q=85",
+                description: "Discover the beauty of the sea, listen to the gentle waves, and enjoy the peaceful atmosphere of nature. Let every sunset bring you a new adventure."
+            },
+            {
+                title: "THE NATURE",
+                description: "Escape the ordinary and explore breathtaking landscapes. Experience the magic of nature, beautiful horizons, and unforgettable moments."
+            }
+        ];
+
+        let currentSlide = 0;
+
+        const hero = document.getElementById("hero");
+        const heading = document.getElementById("heading");
+        const description = document.getElementById("description");
+        const content = document.getElementById("content");
+
+        function showSlide(index) {
+            currentSlide = (index + slides.length) % slides.length;
+
+            const slide = slides[currentSlide];
+
+            hero.style.backgroundImage = `
+                linear-gradient(
+                    rgba(15, 20, 35, 0.58),
+                    rgba(15, 20, 35, 0.58)
+                ),
+                url("${slide.image}")
+            `;
+
+            heading.textContent = slide.title;
+            description.textContent = slide.description;
+
+            // Restart the fade-in animation
+            content.style.animation = "none";
+            void content.offsetWidth;
+            content.style.animation = "fadeIn 0.8s ease";
+        }
+
+        document.getElementById("prev").addEventListener("click", () => {
+            showSlide(currentSlide - 1);
+        });
+
+        document.getElementById("next").addEventListener("click", () => {
+            showSlide(currentSlide + 1);
+        });
+
+        // Change slides automatically every 6 seconds
+        let autoSlide = setInterval(() => {
+            showSlide(currentSlide + 1);
+        }, 6000);
+
+        // Pause auto-slide when interacting with arrows
+        document.querySelectorAll(".arrow").forEach(button => {
+            button.addEventListener("click", () => {
+                clearInterval(autoSlide);
+
+                autoSlide = setInterval(() => {
+                    showSlide(currentSlide + 1);
+                }, 6000);
+            });
+        });
+
+        // Explore button action
+        document.getElementById("exploreBtn").addEventListener("click", event => {
+            event.preventDefault();
+            alert("Welcome to The Ocean! Start exploring the beauty of nature.");
+        });
+    </script>
+
+</body>
+</html>
